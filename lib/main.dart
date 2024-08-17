@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_state.dart';
 import 'package:login/features/login/presentation/page/login_screen.dart';
+import 'package:login/features/login/presentation/page/signup_input_screen.dart';
 import 'package:login/firebase_options.dart';
 
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
@@ -41,6 +42,12 @@ class MyApp extends StatelessWidget {
             child: HomeScreen(),
           ),
         ),
+        GoRoute(
+            path: '/signup_input',
+          builder: (context, state) => BlocProvider.value(
+            value: authBloc,
+            child: SignupInputScreen(),
+          ),)
       ],
       redirect: (context, state) {
         final authState = authBloc.state;
