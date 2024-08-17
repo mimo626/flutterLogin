@@ -18,6 +18,7 @@ class _SignupInputScreenState extends State<SignupInputScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text(''),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
