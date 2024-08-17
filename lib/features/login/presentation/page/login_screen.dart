@@ -134,7 +134,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(color: Colors.black),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push('/signup_input');
+                        },
                         child: Text(
                           '회원가입',
                           style: TextStyle(
