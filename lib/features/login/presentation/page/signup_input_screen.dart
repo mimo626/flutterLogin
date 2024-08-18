@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:login/features/login/presentation/page/login_screen.dart';
 
 class SignupInputScreen extends StatefulWidget {
   const SignupInputScreen({super.key});
@@ -95,6 +98,31 @@ class _SignupInputScreenState extends State<SignupInputScreen> {
                 ),
                 onPressed: () {
                   // 다음 버튼 클릭 시 처리할 내용
+                  //회원가입 로직
+                  if(_passwordController.text == _confirmPasswordController.text){
+                    FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text)
+                        .catchError((e) {
+                      //회원가입 실패시
+                      print(e);
+                    }).then((value) {
+                      //회원가입 성공시
+                      _emailController.clear();
+                      _nicknameController.clear();
+                      _passwordController.clear();
+                      _confirmPasswordController.clear();
+                      print('회원가입 성공');
+                      FocusScope.of(context).unfocus();
+                      context.pop();
+                    });
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("비밀번호를 동일하게 입력해 주세요,"))
+                    );
+                  }
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),
