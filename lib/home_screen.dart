@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:login/features/login/presentation/bloc/email_login/email_bloc.dart';
+import 'package:login/features/login/presentation/bloc/email_login/email_state.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_state.dart';
 
@@ -26,6 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
           SnackBar(content: Text('${authState.userName}님 로그인되었습니다.')),
         );
         _isSnackBarShown = true; // 스낵바가 표시된 것으로 설정
+      });
+    }
+
+    final emailState = context.read<EmailBloc>().state;
+    if(emailState is EmailSuccess && !_isSnackBarShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('이메일로 로그인되었습니다.')),
+        );
+        _isSnackBarShown = true;
       });
     }
   }
