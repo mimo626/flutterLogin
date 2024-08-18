@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:login/features/login/presentation/bloc/email_login/email_bloc.dart';
+import 'package:login/features/login/presentation/bloc/email_login/email_event.dart';
+import 'package:login/features/login/presentation/bloc/email_login/email_state.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_event.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_state.dart';
@@ -24,17 +27,33 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if(state is AuthAuthenticated){
-            print("구글 로그인 성공");
-            context.go('/home');
-          }else if(state is AuthError){
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message))
-            );
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthAuthenticated) {
+                print("구글 로그인 성공");
+                context.go('/home');
+              } else if (state is AuthError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message))
+                );
+              }
+            },
+          ),
+          BlocListener<EmailBloc, EmailState>(
+            listener: (context, state) {
+              if(state is EmailSuccess){
+                print("이메일 로그인 성공");
+                context.go('/home');
+              } else if (state is EmailFailure){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message))
+                );
+              }
+            },
+          )
+        ],
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -116,19 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
+                    context.read<EmailBloc>().add(EmailSignInRequested(
                         email: _emailController.text,
                         password: _passwordController.text)
-                        .catchError((e) {
-                      //로그인 실패시
-                      print(e);
-                    }).then((value) {
-                      //로그인 성공했을시
-                      _emailController.clear();
-                      _passwordController.clear();
-                      print('로그인 성공');
-                    });
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

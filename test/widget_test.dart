@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:login/features/login/presentation/bloc/email_login/email_bloc.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
 
 import 'package:login/main.dart';
@@ -16,13 +17,17 @@ void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // AuthBloc 인스턴스를 생성합니다.
     final authBloc = AuthBloc();
+    final emailBloc = EmailBloc();
 
     // MyApp 위젯을 BlocProvider로 감싸고, AuthBloc을 제공하는 방식으로 변경합니다.
     await tester.pumpWidget(
-      BlocProvider<AuthBloc>(
-        create: (context) => authBloc,
-        child: MyApp(authBloc: authBloc,),
-      ),
+      MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: authBloc),
+            BlocProvider.value(value: emailBloc)
+          ],
+          child: MyApp(authBloc: authBloc, emailBloc: emailBloc)
+      )
     );
 
     // Verify that our counter starts at 0.
