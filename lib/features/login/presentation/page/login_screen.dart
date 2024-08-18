@@ -17,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.email_outlined),
                     fillColor: Color(0xfff0f0f0),
@@ -73,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 10),
                 TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock_outline),
@@ -111,7 +115,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    FirebaseAuth.instance
+                        .signInWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text)
+                        .catchError((e) {
+                      //로그인 실패시
+                      print(e);
+                    }).then((value) {
+                      //로그인 성공했을시
+                      _emailController.clear();
+                      _passwordController.clear();
+                      print('로그인 성공');
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
