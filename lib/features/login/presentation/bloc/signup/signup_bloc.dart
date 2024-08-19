@@ -22,7 +22,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState>{
       );
       User? user = _firebaseAuth.currentUser;
       user?.updateDisplayName(event.nickName);
-
+      print('닉네임: ${event.nickName}');
       emit(SignupSuccess());
     } on FirebaseAuthException catch (e) {
       emit(SignupFailure(message: e.message ?? '회원가입 실패'));

@@ -10,6 +10,8 @@ import 'package:login/features/login/presentation/bloc/email_login/email_state.d
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_event.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_state.dart';
+import 'package:login/features/login/presentation/bloc/signup/signup_bloc.dart';
+import 'package:login/features/login/presentation/bloc/signup/signup_state.dart';
 import 'package:login/main.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,7 +24,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +54,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
               }
             },
-          )
+          ),
+          BlocListener<SignupBloc, SignupState>(
+            listener: (context, state) {
+              if (state is SignupSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('회원가입을 성공했습니다.'))
+                );
+              }
+            },
+          ),
         ],
         child: SingleChildScrollView(
           child: Padding(
