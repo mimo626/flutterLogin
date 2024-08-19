@@ -7,6 +7,7 @@ import 'package:login/features/login/presentation/bloc/email_login/email_bloc.da
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
 import 'package:login/features/login/presentation/page/login_screen.dart';
 import 'package:login/features/login/presentation/page/signup_input_screen.dart';
+import 'package:login/features/login/presentation/page/terms_conditions_screen.dart';
 import 'package:login/firebase_options.dart';
 import 'package:login/home_screen.dart';
 
@@ -54,9 +55,16 @@ class MyApp extends StatelessWidget {
           ),
         ),
         GoRoute(
+          path: '/terms',
+          builder: (context, state) => BlocProvider.value(
+            value: emailBloc,
+            child: TermsConditionsScreen(),
+          ),
+        ),
+        GoRoute(
           path: '/signup_input',
           builder: (context, state) => BlocProvider.value(
-            value: authBloc,
+            value: emailBloc,
             child: SignupInputScreen(),
           ),
         ),

@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.push('/signup_input');
+                          context.push('/terms');
                         },
                         child: Text(
                           '회원가입',
