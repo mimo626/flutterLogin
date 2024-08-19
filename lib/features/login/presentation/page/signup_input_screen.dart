@@ -108,14 +108,17 @@ class _SignupInputScreenState extends State<SignupInputScreen> {
                       //회원가입 실패시
                       print(e);
                     }).then((value) {
-                      //회원가입 성공시
+                      // 회원가입 성공 시
+                      User? user = FirebaseAuth.instance.currentUser;
+                      user?.updateProfile(displayName: _nicknameController.text);
+
                       _emailController.clear();
                       _nicknameController.clear();
                       _passwordController.clear();
                       _confirmPasswordController.clear();
                       print('회원가입 성공');
                       FocusScope.of(context).unfocus();
-                      context.pop();
+                      context.go('/login');
                     });
                   }
                   else{
