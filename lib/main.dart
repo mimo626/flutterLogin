@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_state.dart';
 import 'package:login/features/login/presentation/bloc/email_login/email_bloc.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
+import 'package:login/features/login/presentation/bloc/signup/signup_bloc.dart';
 import 'package:login/features/login/presentation/page/login_screen.dart';
 import 'package:login/features/login/presentation/page/signup_input_screen.dart';
 import 'package:login/features/login/presentation/page/terms_conditions_screen.dart';
@@ -19,15 +20,17 @@ void main() async {
 
   final AuthBloc authBloc = AuthBloc();
   final EmailBloc emailBloc = EmailBloc();
+  final SignupBloc signupBloc = SignupBloc();
 
-  runApp(MyApp(authBloc: authBloc, emailBloc: emailBloc));
+  runApp(MyApp(authBloc: authBloc, emailBloc: emailBloc, signupBloc: signupBloc));
 }
 
 class MyApp extends StatelessWidget {
   final AuthBloc authBloc;
   final EmailBloc emailBloc;
+  final SignupBloc signupBloc;
 
-  MyApp({required this.authBloc, required this.emailBloc});
+  MyApp({required this.authBloc, required this.emailBloc, required this.signupBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider.value(value: authBloc),
               BlocProvider.value(value: emailBloc),
+              BlocProvider.value(value: signupBloc),
             ],
             child: LoginScreen(),
           ),
@@ -57,14 +61,14 @@ class MyApp extends StatelessWidget {
         GoRoute(
           path: '/terms',
           builder: (context, state) => BlocProvider.value(
-            value: emailBloc,
+            value: signupBloc,
             child: TermsConditionsScreen(),
           ),
         ),
         GoRoute(
           path: '/signup_input',
           builder: (context, state) => BlocProvider.value(
-            value: emailBloc,
+            value: signupBloc,
             child: SignupInputScreen(),
           ),
         ),
