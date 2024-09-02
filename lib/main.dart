@@ -15,8 +15,10 @@ import 'package:login/features/login/presentation/bloc/signup/signup_bloc.dart';
 import 'package:login/features/login/presentation/page/login_screen.dart';
 import 'package:login/features/login/presentation/page/signup_input_screen.dart';
 import 'package:login/features/login/presentation/page/terms_conditions_screen.dart';
+import 'package:login/features/onboarding/presentation/page/onboarding1_screen.dart';
 import 'package:login/firebase_options.dart';
 import 'package:login/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,23 +39,26 @@ void main() async {
   // SignupBloc 인스턴스 생성
   final SignupBloc signupBloc = SignupBloc(userUsecase: userUsecase);
 
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  final prefs = await SharedPreferences.getInstance();
+  final bool isOnboardingCompleted = prefs.getBool('isOnboardingCompleted') ?? false;
 
-  runApp(MyApp(authBloc: authBloc, emailBloc: emailBloc, signupBloc: signupBloc));
+  runApp(MyApp(initialRoute: isOnboardingCompleted ? '/login' : '/onboarding',
+      authBloc: authBloc, emailBloc: emailBloc, signupBloc: signupBloc));
 }
 
 class MyApp extends StatelessWidget {
   final AuthBloc authBloc;
   final EmailBloc emailBloc;
   final SignupBloc signupBloc;
+  final String initialRoute;
 
-  MyApp({required this.authBloc, required this.emailBloc, required this.signupBloc});
+
+  MyApp({required this.authBloc, required this.emailBloc, required this.signupBloc, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
     final GoRouter _router = GoRouter(
-      initialLocation: '/login',
+      initialLocation: initialRoute,
       routes: [
         GoRoute(
           path: '/login',
@@ -64,6 +69,13 @@ class MyApp extends StatelessWidget {
               BlocProvider.value(value: signupBloc),
             ],
             child: LoginScreen(),
+          ),
+        ),
+        GoRoute(
+          path: '/onboarding',
+          builder: (context, state) => BlocProvider.value(
+            value: signupBloc,
+            child: Onboarding1Screen(),
           ),
         ),
         GoRoute(
