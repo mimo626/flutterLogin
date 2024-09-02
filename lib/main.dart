@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:login/features/login/data/repositories/user_repository_impl.dart';
 import 'package:login/features/login/domain/repositories/user_repository.dart';
@@ -35,6 +36,9 @@ void main() async {
 
   // SignupBloc 인스턴스 생성
   final SignupBloc signupBloc = SignupBloc(userUsecase: userUsecase);
+
+  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   runApp(MyApp(authBloc: authBloc, emailBloc: emailBloc, signupBloc: signupBloc));
 }

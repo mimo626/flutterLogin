@@ -1,0 +1,14 @@
+flutter_native_splash:
+  android: true
+  ios: true
+  web: true
+  color: "#ffffff"  # 배경색 설정
+  color_dark: "#121212"  # 다크모드 배경색 설정
+  background_image: "lib/assets/splash.png"  # 전체 화면 스플래쉬 이미지 설정
+
+  android_12:
+    image: lib/assets/splash_icon.png  # 안드로이드 12+ 용 원형 아이콘 이미지 설정
+    icon_background_color: "#ffffff"  # 아이콘 배경색 설정
+    # 다크모드 설정이 필요할 경우 아래 줄의 주석을 해제하고 파일 경로를 설정하세요
+    # image_dark: assets/splash_icon_dark.png
+    # icon_background_color_dark: "#121212"
