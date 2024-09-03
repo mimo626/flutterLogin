@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
             listener: (context, state) {
               if (state is AuthAuthenticated) {
                 print("구글 로그인 성공");
-                context.go('/home');
+                context.go('/main');
               } else if (state is AuthError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message))
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
             listener: (context, state) {
               if(state is EmailSuccess){
                 print("이메일 로그인 성공");
-                context.go('/home');
+                context.go('/main');
               } else if (state is EmailFailure){
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(state.message))

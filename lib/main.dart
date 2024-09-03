@@ -18,6 +18,7 @@ import 'package:login/features/login/presentation/page/terms_conditions_screen.d
 import 'package:login/features/onboarding/presentation/page/onboarding1_screen.dart';
 import 'package:login/firebase_options.dart';
 import 'package:login/home_screen.dart';
+import 'package:login/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -100,6 +101,16 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => BlocProvider.value(
             value: signupBloc,
             child: SignupInputScreen(),
+          ),
+        ),
+        GoRoute(
+          path: '/main',
+          builder: (context, state) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: authBloc),
+              BlocProvider.value(value: emailBloc),
+            ],
+            child: MainScreen(),
           ),
         ),
       ],
