@@ -23,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           UserCredential _credential = await _firebaseAuth.signInWithCredential(_googleCredential);
 
           if (_credential.user != null) {
-            emit(AuthAuthenticated(userName: _credential.user!.displayName ?? ''));
+            emit(AuthAuthenticated(userName: _credential.user!.displayName ?? '', email: _credential.user!.email ?? ''));
           } else {
             emit(AuthError(message: '로그인 실패: 사용자 정보가 없습니다.'));
           }
