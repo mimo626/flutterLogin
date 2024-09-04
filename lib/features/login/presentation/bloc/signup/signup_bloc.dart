@@ -19,7 +19,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     emit(SignupLoading());
     try {
       await _userUsecase.execute(event.email, event.password, event.nickName);
-      print("Bloc------------------------");
       emit(SignupSuccess());
     } on FirebaseAuthException catch (e) {
       emit(SignupFailure(message: e.message ?? '회원가입 실패'));

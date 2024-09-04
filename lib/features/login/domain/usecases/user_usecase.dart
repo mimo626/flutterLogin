@@ -9,7 +9,6 @@ class UserUsecase {
 
   Future<void> execute(String email, String password, String nickname) async {
     final user = User(email: email, password: password, nickname: nickname);
-    print("Usecase------------------------");
     await repository.signUp(user);
   }
 }
