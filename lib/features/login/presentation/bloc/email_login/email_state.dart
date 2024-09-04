@@ -11,7 +11,12 @@ class EmailInitial extends EmailState {}
 
 class EmailLoading extends EmailState {}
 
-class EmailSuccess extends EmailState {}
+class EmailSuccess extends EmailState {
+  final String userName;
+  final String email;
+
+  EmailSuccess({required this.userName, required this.email});
+}
 
 class EmailFailure extends EmailState {
   final String message;
