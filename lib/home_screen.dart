@@ -13,42 +13,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isSnackBarShown = false; // 스낵바 표시 여부를 추적하는 변수
-
-  @override
-  void initState() {
-    super.initState();
-
-    // 초기 상태 확인
-    final authState = context.read<AuthBloc>().state;
-    if (authState is AuthAuthenticated && !_isSnackBarShown) {
-      //초기 화면 빌드가 완료된 뒤에 스낵바 표시
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${authState.userName}님 로그인되었습니다.')),
-        );
-        _isSnackBarShown = true; // 스낵바가 표시된 것으로 설정
-      });
-    }
-
-    final emailState = context.read<EmailBloc>().state;
-    if(emailState is EmailSuccess && !_isSnackBarShown) {
-      WidgetsBinding.instance.addPostFrameCallback((_){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('이메일로 로그인되었습니다.')),
-        );
-        _isSnackBarShown = true;
-      });
-    }
-  }
+  bool _isSnackBarShown = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:Center(
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listenWhen: (previous, current) => current is AuthAuthenticated,
+            listener: (context, state) {
+              if (state is AuthAuthenticated && !_isSnackBarShown) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${state.userName}님 로그인되었습니다.')),
+                );
+                print(_isSnackBarShown);
+                _isSnackBarShown = true;
+                print(_isSnackBarShown);
+              }
+            },
+          ),
+          BlocListener<EmailBloc, EmailState>(
+            listenWhen: (previous, current) => current is EmailSuccess,
+            listener: (context, state) {
+              if (state is EmailSuccess && !_isSnackBarShown) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('이메일로 로그인되었습니다.')),
+                );
+                _isSnackBarShown = true;
+              }
+            },
+          ),
+        ],
+        child: Center(
           child: Text("home"),
         ),
+      ),
     );
   }
 }
