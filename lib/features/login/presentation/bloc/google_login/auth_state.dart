@@ -6,8 +6,9 @@ class AuthLoading extends AuthState {}
 
 class AuthAuthenticated extends AuthState {
   final String userName;
+  final String email;
 
-  AuthAuthenticated({required this.userName});
+  AuthAuthenticated({required this.email, required this.userName});
 }
 
 class AuthError extends AuthState {
