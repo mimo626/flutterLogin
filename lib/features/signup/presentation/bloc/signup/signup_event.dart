@@ -17,3 +17,39 @@ class EmailSignup extends SignupEvent {
   @override
   List<Object?> get props => [email, nickName, password];
 }
+
+class OnChangedEmail extends SignupEvent {
+  final String email;
+
+  const OnChangedEmail(this.email);
+
+  @override
+  List<Object?> get props => [email];
+}
+
+class OnChangedNickName extends SignupEvent {
+  final String nickName;
+
+  const OnChangedNickName(this.nickName);
+
+  @override
+  List<Object?> get props => [nickName];
+}
+
+class OnChangedPassword extends SignupEvent {
+  final String password;
+
+  const OnChangedPassword(this.password);
+
+  @override
+  List<Object?> get props => [password];
+}
+
+class OnChangedConfirmPassword extends SignupEvent {
+  final String confirmPassword;
+
+  const OnChangedConfirmPassword(this.confirmPassword);
+
+  @override
+  List<Object?> get props => [confirmPassword];
+}

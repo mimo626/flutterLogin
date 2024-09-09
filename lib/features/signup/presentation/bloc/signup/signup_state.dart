@@ -1,13 +1,46 @@
 import 'package:equatable/equatable.dart';
 
-abstract class SignupState extends Equatable{
+abstract class SignupState extends Equatable {
   const SignupState();
 
   @override
   List<Object?> get props => [];
 }
 
-class SignupInitial extends SignupState {}
+class SignupInitial extends SignupState {
+  final String email;
+  final String nickName;
+  final String password;
+  final String confirmPassword;
+  final bool isFormValid;
+
+  const SignupInitial({
+    this.email = '',
+    this.nickName = '',
+    this.password = '',
+    this.confirmPassword = '',
+    this.isFormValid = false,
+  });
+
+  SignupInitial copyWith({
+    String? email,
+    String? nickName,
+    String? password,
+    String? confirmPassword,
+    bool? isFormValid,
+  }) {
+    return SignupInitial(
+      email: email ?? this.email,
+      nickName: nickName ?? this.nickName,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+      isFormValid: isFormValid ?? this.isFormValid,
+    );
+  }
+
+  @override
+  List<Object?> get props => [email, nickName, password, confirmPassword, isFormValid];
+}
 
 class SignupLoading extends SignupState {}
 
