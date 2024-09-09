@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:login/features/login/domain/repositories/user_repository.dart';
-import 'package:login/features/login/domain/entity//user.dart';
+import 'package:login/features/signup/domain/entity//user.dart';
+import 'package:login/features/signup/domain/repositories/user_repository.dart';
 
 
 class UserRepositoryImpl implements UserRepository {

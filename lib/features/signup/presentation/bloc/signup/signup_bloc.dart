@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:login/features/login/domain/usecases/user_usecase.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_event.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_state.dart';
+import 'package:login/features/signup/domain/usecases/user_usecase.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_event.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_state.dart';
+
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final UserUsecase _userUsecase;

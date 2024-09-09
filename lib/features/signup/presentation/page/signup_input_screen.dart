@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_bloc.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_event.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_state.dart';
-import 'package:login/features/login/presentation/page/login_screen.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_bloc.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_event.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_state.dart';
 
 class SignupInputScreen extends StatefulWidget {
   const SignupInputScreen({super.key});

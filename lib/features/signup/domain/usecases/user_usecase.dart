@@ -1,5 +1,5 @@
-import 'package:login/features/login/domain/entity/user.dart';
-import 'package:login/features/login/domain/repositories/user_repository.dart';
+import 'package:login/features/signup/domain/entity/user.dart';
+import 'package:login/features/signup/domain/repositories/user_repository.dart';
 
 
 class UserUsecase {

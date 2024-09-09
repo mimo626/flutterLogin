@@ -10,8 +10,9 @@ import 'package:login/features/login/presentation/bloc/email_login/email_state.d
 import 'package:login/features/login/presentation/bloc/google_login/auth_bloc.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_event.dart';
 import 'package:login/features/login/presentation/bloc/google_login/auth_state.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_bloc.dart';
-import 'package:login/features/login/presentation/bloc/signup/signup_state.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_bloc.dart';
+import 'package:login/features/signup/presentation/bloc/signup/signup_state.dart';
+
 import 'package:login/main.dart';
 
 class LoginScreen extends StatefulWidget {
