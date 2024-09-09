@@ -1,9 +1,9 @@
-class User {
+class SignupUser {
   final String email;
   final String? password;
   final String? nickname;
 
-  User(
+  SignupUser(
     {
     required this.email,
       this.password,

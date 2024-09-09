@@ -1,6 +1,6 @@
 
-import 'package:login/features/signup/domain/entity/user.dart';
+import 'package:login/features/signup/domain/entity/signup_user.dart';
 
 abstract class UserRepository {
-  Future<void> signUp(User user);
+  Future<void> signUp(SignupUser user);
 }
