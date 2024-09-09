@@ -4,17 +4,55 @@ import 'package:login/features/signup/domain/usecases/user_usecase.dart';
 import 'package:login/features/signup/presentation/bloc/signup/signup_event.dart';
 import 'package:login/features/signup/presentation/bloc/signup/signup_state.dart';
 
-
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final UserUsecase _userUsecase;
 
   SignupBloc({required UserUsecase userUsecase})
       : _userUsecase = userUsecase,
         super(SignupInitial()) {
+    on<OnChangedEmail>(_onChangedEmail);
+    on<OnChangedNickName>(_onChangedNickName);
+    on<OnChangedPassword>(_onChangedPassword);
+    on<OnChangedConfirmPassword>(_onChangedConfirmPassword);
     on<EmailSignup>(_onEmailSignup);
   }
 
   // 이벤트 처리 메서드
+  void _onChangedEmail(OnChangedEmail event, Emitter<SignupState> emit) {
+    final currentState = state as SignupInitial;
+    emit(currentState.copyWith(email: event.email));
+    _checkFormValidity(emit);
+  }
+
+  void _onChangedNickName(OnChangedNickName event, Emitter<SignupState> emit) {
+    final currentState = state as SignupInitial;
+    emit(currentState.copyWith(nickName: event.nickName));
+    _checkFormValidity(emit);
+  }
+
+  void _onChangedPassword(OnChangedPassword event, Emitter<SignupState> emit) {
+    final currentState = state as SignupInitial;
+    emit(currentState.copyWith(password: event.password));
+    _checkFormValidity(emit);
+  }
+
+  void _onChangedConfirmPassword(OnChangedConfirmPassword event, Emitter<SignupState> emit) {
+    final currentState = state as SignupInitial;
+    emit(currentState.copyWith(confirmPassword: event.confirmPassword));
+    _checkFormValidity(emit);
+  }
+
+  void _checkFormValidity(Emitter<SignupState> emit) {
+    final currentState = state as SignupInitial;
+    final isFormValid = currentState.email.isNotEmpty &&
+        currentState.nickName.isNotEmpty &&
+        currentState.password.isNotEmpty &&
+        currentState.confirmPassword.isNotEmpty &&
+        currentState.password == currentState.confirmPassword;
+
+    emit(currentState.copyWith(isFormValid: isFormValid));
+  }
+
   Future<void> _onEmailSignup(
       EmailSignup event, Emitter<SignupState> emit) async {
     emit(SignupLoading());
