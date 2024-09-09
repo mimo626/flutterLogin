@@ -61,83 +61,99 @@ class _SignupInputScreenState extends State<SignupInputScreen> {
                 style: TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 40),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: '이메일',
-                  border: OutlineInputBorder(),
-                ),
+              BlocBuilder<SignupBloc, SignupState>(
+                builder: (context, state) {
+                  return TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: '이메일',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (email) {
+                        context.read<SignupBloc>().add(OnChangedEmail(email));
+                      },
+                    );
+                  }
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: _nicknameController,
-                decoration: const InputDecoration(
-                  labelText: '닉네임',
-                  border: OutlineInputBorder(),
-                ),
+              BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return TextField(
+                      controller: _nicknameController,
+                      decoration: const InputDecoration(
+                        labelText: '닉네임',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (nickName) {
+                        context.read<SignupBloc>().add(OnChangedNickName(nickName));
+                      },
+                    );
+                  }
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: '비밀번호',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.visibility_off),
-                    onPressed: () {
-                      // 비밀번호 표시 기능 구현 가능
-                    },
-                  ),
-                ),
+              BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: '비밀번호',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (password) {
+                        context.read<SignupBloc>().add(OnChangedPassword(password));
+                      },
+                    );
+                  }
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: _confirmPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: '비밀번호 확인',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.visibility_off),
-                    onPressed: () {
-                      // 비밀번호 확인 표시 기능 구현 가능
-                    },
-                  ),
-                ),
+              BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return TextField(
+                      controller: _confirmPasswordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: '비밀번호 확인',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (password) {
+                        context.read<SignupBloc>().add(OnChangedConfirmPassword(password));
+                      },
+                    );
+                  }
               ),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity, // 버튼의 넓이를 화면 전체로 설정
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.indigo,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)
-                      )
-                  ),
-                  onPressed: () {
-                    // 다음 버튼 클릭 시 처리할 내용
-                    //회원가입 로직
-                    if(_passwordController.text == _confirmPasswordController.text){
-                      context.read<SignupBloc>().add(EmailSignup(
-                          email: _emailController.text,
-                          nickName: _nicknameController.text,
-                          password: _passwordController.text)
-                      );
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("비밀번호를 동일하게 입력해 주세요,"))
-                      );
-                    }
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text('다음', style: TextStyle(color: Colors.white)
-                    ),
-                  ),
-                ),
+                child:
+                BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)
+                          )
+                      ),
+                      onPressed: state is SignupInitial && state.isFormValid
+                          ? () {
+                        context.read<SignupBloc>().add(
+                          EmailSignup(
+                            email: state.email,
+                            nickName: state.nickName,
+                            password: state.password,
+                          ),
+                        );
+                      }
+                          : null,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 15),
+                        child: Text('다음', style: TextStyle(color: Colors.white)
+                        ),
+                      ),
+                    );
+                  }
+                )
               ),
             ],
           ),
