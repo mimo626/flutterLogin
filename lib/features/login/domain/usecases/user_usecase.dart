@@ -1,4 +1,4 @@
-import 'package:login/features/login/domain/model/user.dart';
+import 'package:login/features/login/domain/entity/user.dart';
 import 'package:login/features/login/domain/repositories/user_repository.dart';
 
 
@@ -8,7 +8,8 @@ class UserUsecase {
   UserUsecase(this.repository);
 
   Future<void> execute(String email, String password, String nickname) async {
-    final user = User(email: email, password: password, nickname: nickname);
+    final user = User(email: email, password: password);
     await repository.signUp(user);
   }
+
 }
