@@ -14,12 +14,12 @@ class SignupInitial extends SignupState {
   final String confirmPassword;
   final bool isFormValid;
 
-  const SignupInitial({
-    this.email = '',
-    this.nickName = '',
-    this.password = '',
-    this.confirmPassword = '',
-    this.isFormValid = false,
+  SignupInitial({
+    required this.email,
+    required this.nickName,
+    required this.password,
+    required this.confirmPassword,
+    required this.isFormValid,
   });
 
   SignupInitial copyWith({
