@@ -11,11 +11,13 @@ class EmailSignup extends SignupEvent {
   final String email;
   final String nickName;
   final String password;
+  final String confirmPassword;
 
-  const EmailSignup({required this.email, required this.nickName, required this.password});
+  const EmailSignup({required this.email, required this.nickName, required this.password, required this.confirmPassword});
 
   @override
-  List<Object?> get props => [email, nickName, password];
+  List<Object?> get props => [email, nickName, password, confirmPassword];
+
 }
 
 class OnChangedEmail extends SignupEvent {
