@@ -128,31 +128,39 @@ class _SignupInputScreenState extends State<SignupInputScreen> {
                 child:
                 BlocBuilder<SignupBloc, SignupState>(
                   builder: (context, state) {
+                    print("isFormValid: ${state}");
+                    bool isButtonEnabled = state is SignupInitial && state.isFormValid;
+                    print("isButtonEnabled: ${isButtonEnabled}");
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.indigo,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)
-                          )
+                        backgroundColor: Colors.indigo,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
-                      onPressed: state is SignupInitial && state.isFormValid
+                      onPressed: isButtonEnabled
                           ? () {
                         context.read<SignupBloc>().add(
                           EmailSignup(
                             email: state.email,
                             nickName: state.nickName,
                             password: state.password,
+                            confirmPassword: state.confirmPassword,
                           ),
                         );
+                        print("다음버튼`````````````````````````````````````");
+
                       }
                           : null,
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 15),
-                        child: Text('다음', style: TextStyle(color: Colors.white)
+                        child: Text(
+                          '다음',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     );
-                  }
+                  },
                 )
               ),
             ],
